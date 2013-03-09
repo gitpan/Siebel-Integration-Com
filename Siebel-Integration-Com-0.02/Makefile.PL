@@ -6,7 +6,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME             => 'Siebel::Integration::Com',
     AUTHOR           => q{Kyle Mathers <kyle.perl@mathersit.com>},
-    VERSION_FROM     => 'lib/Siebel/Integration/Com.pm',
+    VERSION			     => 0.02,
     ABSTRACT_FROM    => 'lib/Siebel/Integration/Com.pm',
     LICENSE          => 'Artistic_2_0',
     PL_FILES         => {},

@@ -1,5 +1,7 @@
 #!/usr/bin/perl -w
 
+use strict;
+
 use Test::More 'no_plan';
 BEGIN { 
 	use_ok('Win32::OLE');
@@ -28,6 +30,7 @@ my %inputs = (
 	DataSource => 'CHANGE_ME', #Thick
 );
 
+#If you are logged in as SADMIN, updates will not work. To test these write methods you need to be logged in as a non seed data user.
 #some tests require input data specific to your system, if these values are not set the tests will skip.
 my %testData = (
 	SetPositionId => undef, #Id of a non primary position related to the loged in user
@@ -40,7 +43,7 @@ my %testData = (
 #Base tests requires no user/pass etc
 my $ThickDLL = 'SiebelDataServer.ApplicationObject';
 my $thinDLL = 'SiebelDataControl.SiebelDataControl.1';
-my ($saThickm,$saThin);
+my ($saThick,$saThin);
 eval{
 	$saThick = Win32::OLE->new($ThickDLL) or die "Failed to load thin DLL";
 };

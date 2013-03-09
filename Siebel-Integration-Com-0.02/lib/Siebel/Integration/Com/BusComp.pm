@@ -1,4 +1,4 @@
-package Siebel::Integration::Com::BusComp 0.01;
+package Siebel::Integration::Com::BusComp 0.02;
 
 use 5.006;
 use Moose;
@@ -603,8 +603,14 @@ Siebel::Integration::Com::BusComp - Abstraction of Siebel Business Component
 
 	use Siebel::Integration::Com;
 	
-	my $sa = Siebel::Integration::Com->new(ConnectionType=>'Thick', UserName=>$inputs{user}, PassWord=>$inputs{pass}, CFG=>$inputs{cfg}, DataSource=>$inputs{DataSource});
-	
+	my $sa = Siebel::Integration::Com->new(
+			ConnectionType=>'Thick', 
+			UserName=>$inputs{user}, 
+			PassWord=>$inputs{pass}, 
+			CFG=>$inputs{cfg}, 
+			DataSource=>$inputs{DataSource}
+		);
+
 	#Query for and print employee's with logins containing ADMIN
 	my @Fields = ('First Name','Last Name','Login Name'); #fields to activate and print
 	my $BO = $sa->GetBusObject('Employee');
@@ -714,8 +720,8 @@ Siebel::Integration::Com::BusComp - Abstraction of Siebel Business Component
 
 
 =head1 DESCRIPTION
-	
-The Siebel::Integration::Com modules are designed to remove the different method calls and eror checking between the COM Data Control and COM Data Server interfaces. 
+
+The Siebel::Integration::Com modules are designed to remove the different method calls and error checking between the COM Data Control and COM Data Server interfaces. 
 Changing between the two interfaces only requires a change in the parameters to Siebel::Integration::Com->new() rather than a rewrite of all calls.
 Beyond just replicating the base functions of the interfaces it is hoped that additional methods will be added to these modules to extend the functionality provided by the Siebel COM framework.
 
@@ -732,7 +738,7 @@ All methods that have been exposed keep the same names so there is no additional
 =item BC->ClearToQuery()
 
 	The ClearToQuery method clears the current query
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->SetViewMode(VisibilityType)
@@ -740,30 +746,30 @@ All methods that have been exposed keep the same names so there is no additional
 	The SetViewMode method sets the visibility type
 	This will accept the numbers as per Siebel or you can use a string version of the type
 	
-	SalesRepView			=> 0
+	SalesRepView				=> 0
 	ManagerView				=> 1
-	PersonalView			=> 2
+	PersonalView				=> 2
 	AllView					=> 3
-	OrganizationView		=> 4
+	OrganizationView			=> 4
 	GroupView				=> 5
 	CatalogView				=> 6
-	SubOrganizationView		=> 7
+	SubOrganizationView			=> 7
 
 	Example: $bc->SetViewMode('AllView') is the same as $bc->SetViewMode(3), readability would be better served by AllView
 	
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->ActivateField(FieldName)
 
 	Activates a field so that the next query on the BC will return the fields value
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->ActivateFields(FieldName, FieldName, FieldName, ....)
 
 	Activates an array of fields so that the next query on the BC will return the fields values
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->SetSearchSpec(FieldName, FieldValue)
@@ -775,7 +781,7 @@ All methods that have been exposed keep the same names so there is no additional
 	BC->SetSearchSpec('Status', " <> 'New'")
 	BC->SetSearchSpec('Status', "IS NULL")
 
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->SetSearchExpr(Expr)
@@ -784,7 +790,7 @@ All methods that have been exposed keep the same names so there is no additional
 	
 	Example: BC->SetSearchExpr('[Name] = "Bob"')
 	
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->ExecuteQuery(CursorMode)
@@ -793,11 +799,11 @@ All methods that have been exposed keep the same names so there is no additional
 	This will accept the numbers as per Siebel or you can use a string version of the type
 	
 	ForwardBackward			=> 0
-	ForwardOnly				=> 1
+	ForwardOnly			=> 1
 
 	Example: $bc->ExecuteQuery('ForwardOnly') is the same as $bc->ExecuteQuery(1), readability would be better served by ForwardOnly
 	
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->FirstRecord()
@@ -816,7 +822,7 @@ All methods that have been exposed keep the same names so there is no additional
 =item BC->SetFieldValue(FieldName, Value)
 
 	Sets the field value
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->GetMVGBusComp(FieldName)
@@ -826,7 +832,7 @@ All methods that have been exposed keep the same names so there is no additional
 =item BC->SetSortSpec(SortSpec)
 
 	Sets the sort spec for the BC, See BUGS/LIMITATIONS this does not seem to work
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->DeactivateFields()
@@ -839,38 +845,40 @@ All methods that have been exposed keep the same names so there is no additional
 	This will accept the numbers as per Siebel or you can use a string version of the type
 	
 	ForwardBackward			=> 0
-	ForwardOnly				=> 1
+	ForwardOnly			=> 1
 
 	Example: $bc->ExecuteQuery2('ForwardOnly', 1) is the same as $bc->ExecuteQuery2(1, 1), readability would be better served by ForwardOnly
 	
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
-	The Thin and Thick clients expect different values for ignoreMaxCursorSize. The cover method will automaticly select the appropriate inputs to the underlying ExecuteQuery2 method possible inputs are 0, 1, true, false.
+	The Thin and Thick clients expect different values for ignoreMaxCursorSize. 
+	The cover method will automaticly select the appropriate inputs to the underlying ExecuteQuery2 method possible inputs are 0, 1, true, false.
 
 =item BC->GetFormattedFieldValue(FieldName)
 
-	Returns a string that contains a field value that is in the same format that the Siebel client uses or undef if there was an error. A failure will set BC->Error
+	Returns a string that contains a field value that is in the same format that the Siebel client uses or undef if there was an error. 
+	A failure will set BC->Error
 
 =item BC->GetNamedSearch(SearchName)
 
-	Rerurns the Search related to the input name
+	Rerurns the search related to the input name
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->SetNamedSearch(searchName, searchSpec)
 
 	Sets a named search on the BC, this can not be overriden except using scripting
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->GetSearchExpr()
 
-	Returns the full search expresion for the BC
+	Returns the full search expression for the BC
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->GetSearchSpec(FieldName)
 
-	Returns the search expresion for the specified field only
+	Returns the search expression for the specified field only
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->GetSortSpec()
@@ -882,14 +890,14 @@ All methods that have been exposed keep the same names so there is no additional
 
 	Rerurns the view mode of the BC, this will be an integer number
 	
-	SalesRepView			=> 0
+	SalesRepView				=> 0
 	ManagerView				=> 1
-	PersonalView			=> 2
+	PersonalView				=> 2
 	AllView					=> 3
-	OrganizationView		=> 4
+	OrganizationView			=> 4
 	GroupView				=> 5
 	CatalogView				=> 6
-	SubOrganizationView		=> 7
+	SubOrganizationView			=> 7
 	
 	Returns undef for failure. A failure will set BC->Error
 
@@ -904,7 +912,7 @@ All methods that have been exposed keep the same names so there is no additional
 =item BC->RefineQuery()
 
 	Allows you to start refining the query, use after ExecuteQuery when you do not wish to clear the existing Query information
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->ParentBusComp()
@@ -923,14 +931,14 @@ All methods that have been exposed keep the same names so there is no additional
 =item BC->SetUserProperty(PropertyName, Value)
 
 	Sets a user property to the BC, this is effectivly a global variable. Do not confuse it with User Properties as defined in Siebel tools
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->InvokeMethod(MethodName, MethodArg1, MethodArg2, ..., MethodArgN)
 
 	Invokes a method on the business component object
 	Returns the result of the Method call if there is an error it sets BC->Error
-	
+
 =item BC->GetPicklistBusComp(FieldName)
 
 	Returns a new Siebel::Integration::Com::BusComp object based on the input fields picklist Business Component
@@ -938,48 +946,48 @@ All methods that have been exposed keep the same names so there is no additional
 =item BC->Pick()
 
 	Used on a picklist Business Component returned from GetPicklistBusComp to pick the selected record in to the parent Business Component
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->SetFormattedFieldValue(FieldName, FieldValue)
 
 	Sets the field value using the local format
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->WriteRecord()
 
 	Write changes to the database
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->DeleteRecord()
 
 	Delete the selected record and focus on the next record
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->GetAssocBusComp()
 
-	Returns a Siebel::Integration::Com::BusComp object.
-	Called on a MVG Business Component to get the Associate Business Component. Query the Business Component returned from this call for the record you wish to associte to the base Business Component and then call the Associate method.
+Returns a Siebel::Integration::Com::BusComp object.
+Called on a MVG Business Component to get the Associate Business Component. Query the Business Component returned from this call for the record you wish to associate to the base Business Component and then call the Associate method.
 
 =item BC->Associate(NewBefore/NewAfter)
 
 	Called on an Associate Business Component as returned from GetAssocBusComp to associate the selected record to the base record
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->UndoRecord()
 
 	Undo changes made to the Business Component
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item BC->NewRecord(NewBefore/NewAfter/etc)
 
 	Insert a new record
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set BC->Error
 
 =item New(ConnectionType=>'Thin/Thick', _BO=>Siebel::Integration::Com::BusObj, SApp=>Siebel::Integration::Com)
@@ -1008,7 +1016,7 @@ See L<Siebel::Integration::Com>
 The documentation for L<Siebel::Integration::Com> contains additional information
 
 =head2 REFERENCES
-	
+
 L<Oracle Help Business Component Methods|http://docs.oracle.com/cd/E14004_01/books/OIRef/OIRef_Interfaces_Reference11.html>
 
 =head1 AUTHOR
@@ -1021,7 +1029,7 @@ The same as L<Siebel::Integration::Com>
 
 =head1 VERSION
 
-Version 0.01	  Jan 2013
+Version 0.02 March 2013
 
 =cut
 

@@ -1,4 +1,4 @@
-package Siebel::Integration::Com::PropSet 0.01;
+package Siebel::Integration::Com::PropSet 0.02;
 
 use 5.006;
 use Moose;
@@ -372,8 +372,14 @@ Siebel::Integration::Com::PropSet - Abstraction of Siebel Property Set
 
 	use Siebel::Integration::Com;
 	
-	my $sa = Siebel::Integration::Com->new(ConnectionType=>'Thick', UserName=>$inputs{user}, PassWord=>$inputs{pass}, CFG=>$inputs{cfg}, DataSource=>$inputs{DataSource});
-	
+	my $sa = Siebel::Integration::Com->new(
+			ConnectionType=>'Thick', 
+			UserName=>$inputs{user}, 
+			PassWord=>$inputs{pass}, 
+			CFG=>$inputs{cfg}, 
+			DataSource=>$inputs{DataSource}
+		);
+																	
 	my $PS = $sa->NewPropertySet();
 	if($PS->Error ne ''){
 		die print "Error creating Prop Set: " . $PS->Error;
@@ -439,8 +445,8 @@ Siebel::Integration::Com::PropSet - Abstraction of Siebel Property Set
 	$PS->RemoveChild(0);
 
 =head1 DESCRIPTION
-	
-The Siebel::Integration::Com modules are designed to remove the different method calls and eror checking between the COM Data Control and COM Data Server interfaces. 
+
+The Siebel::Integration::Com modules are designed to remove the different method calls and error checking between the COM Data Control and COM Data Server interfaces. 
 Changing between the two interfaces only requires a change in the parameters to Siebel::Integration::Com->new() rather than a rewrite of all calls.
 Beyond just replicating the base functions of the interfaces it is hoped that additional methods will be added to these modules to extend the functionality provided by the Siebel COM framework.
 
@@ -453,23 +459,23 @@ All methods that have been exposed keep the same names so there is no additional
 =item PS->Error()
 
 	Returns the error text for the last operation, returns '' if no error.
-	
+
 =item PS->GetPropertyCount()
-	
+
 	Returns the number of Properties
-	
+
 =item PS->GetFirstProperty()
-	
+
 	Returns the first properties name or ''
 
 =item PS->GetNextProperty()
-	
+
 	Returns the next properties name or ''
 
 =item PS->GetType()
 
 	Returns the value of the type attribute of a property set or ''
-		
+
 =item PS->GetValue()
 
 	Returns the value of the value attribute of a property set or ''
@@ -484,7 +490,7 @@ All methods that have been exposed keep the same names so there is no additional
 
 =item PS->SetProperty(PropName, PropValue)
 
-	Returns 1 for sucess or undef for failure. A failure will set PS->Error
+	Returns 1 for success or undef for failure. A failure will set PS->Error
 
 =item PS->GetChildCount()
 
@@ -509,37 +515,37 @@ All methods that have been exposed keep the same names so there is no additional
 =item PS->Reset()
 
 	Clears all Siebel property set data from the object. 
-	Returns 1 for sucess. 
+	Returns 1 for success. 
 	Returns undef on failure and sets PS->Error
 
 =item PS->SetType(Value)
 
 	Sets the value for the type attribute of a property set
-	Returns 1 for sucess. 
+	Returns 1 for success. 
 	Returns undef on failure and sets PS->Error
 
 =item PS->SetValue(Value)
 
 	Sets the value for the value attribute of a property set
-	Returns 1 for sucess. 
+	Returns 1 for success. 
 	Returns undef on failure and sets PS->Error
 
 =item PS->InsertChildAt(ChildObject, Index)
 
 	Inserts a child property set in a parent property set at a specific location
-	Returns 1 on sucess
+	Returns 1 on success
 	Returns undef on failure and sets PS->Error
 
 =item PS->RemoveChild(Index)
 
 	Removes a child property set from a parent property set
-	Returns 1 on sucess
+	Returns 1 on success
 	Returns undef on failure and sets PS->Error
 
 =item PS->RemoveProperty(PropName)
 
 	Removes a property from a property set
-	Returns 1 on sucess
+	Returns 1 on success
 	Returns undef on failure and sets PS->Error
 
 =item PS->ConnectionType
@@ -610,7 +616,7 @@ All methods that have been exposed keep the same names so there is no additional
 =head1 REQUIREMENTS
 
 See L<Siebel::Integration::Com>
-	
+
 =head1 TESTING
 
 See L<Siebel::Integration::Com>
@@ -620,7 +626,7 @@ See L<Siebel::Integration::Com>
 The documentation for L<Siebel::Integration::Com> contains additional information
 
 =head2 REFERENCES
-	
+
 L<Oracle Help Property Set Methods|http://docs.oracle.com/cd/E14004_01/books/OIRef/OIRef_Siebel_eScript_Quick_Reference11.html>
 
 =head1 AUTHOR
@@ -633,7 +639,7 @@ The same as L<Siebel::Integration::Com>
 
 =head1 VERSION
 
-Version 0.01	  Jan 2013
+Version 0.02 March 2013
 
 =cut
 

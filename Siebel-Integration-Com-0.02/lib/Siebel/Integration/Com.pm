@@ -1,4 +1,4 @@
-package Siebel::Integration::Com 0.01;
+package Siebel::Integration::Com 0.02;
 
 use 5.006;
 use Moose;
@@ -432,10 +432,23 @@ Siebel::Integration::Com - Abstraction of Siebel Application
 	);
 	
 	#Thin (Server)
-	my $SiebelThin = Siebel::Integration::Com->new(ConnectionType=>'Thin', UserName=>$inputs{user}, PassWord=>$inputs{pass}, Host=>$inputs{host}, Ent=>$inputs{ent}, ObjMgr=>$inputs{ObjMgr});
+	my $SiebelThin = Siebel::Integration::Com->new(
+			ConnectionType=>'Thin', 
+			UserName=>$inputs{user}, 
+			PassWord=>$inputs{pass}, 
+			Host=>$inputs{host}, 
+			Ent=>$inputs{ent}, 
+			ObjMgr=>$inputs{ObjMgr}
+		);
 
 	#Thick (Dedicated)
-	my $SiebelThick = Siebel::Integration::Com->new(ConnectionType=>'Thick', UserName=>$inputs{user}, PassWord=>$inputs{pass}, CFG=>$inputs{cfg}, DataSource=>$inputs{DataSource});
+	my $SiebelThick = Siebel::Integration::Com->new(
+			ConnectionType=>'Thick', 
+			UserName=>$inputs{user}, 
+			PassWord=>$inputs{pass}, 
+			CFG=>$inputs{cfg}, 
+			DataSource=>$inputs{DataSource}
+		);
 	
 	#get and set some basic values
 	print "Prof Attr Set\n" if $SiebelApp->SetProfileAttr("Test Attr 1", "TestVal 1");
@@ -448,7 +461,7 @@ Siebel::Integration::Com - Abstraction of Siebel Application
 	print "Shared Global Set\n" if $SiebelApp->SetSharedGlobal('COMGlobal','Set');
 	print 'GetSharedGlobal - COMGlobal: ' . $SiebelApp->GetSharedGlobal('COMGlobal') . "\n";	
 
-	#Query for Current user. See L<Siebel::Integration::Com::BusObj> and L<Siebel::Integration::Com::BusComp> for more details
+	#Query for Current user. See Siebel::Integration::Com::BusObj and Siebel::Integration::Com::BusComp for full details
 	my $BO = $SiebelApp->GetBusObject('Employee');
 	my $BC = $BO->GetBusComp('Employee');
 
@@ -465,7 +478,7 @@ Siebel::Integration::Com - Abstraction of Siebel Application
 		die print "Something is wrong!";
 	}
 
-	#Business Service Call with Property Set. See L<Siebel::Integration::Com::BusSrv> and L<Siebel::Integration::Com::PropSet> for more details
+	#Business Service Call with Property Set. See Siebel::Integration::Com::BusSrv and Siebel::Integration::Com::PropSet for full details
 	my $BS = $SiebelApp->GetService('Workflow Utilities');
 	my $PS = $SiebelApp->NewPropertySet();
 	my $PSChild = $SiebelApp->NewPropertySet();
@@ -485,10 +498,10 @@ Siebel::Integration::Com - Abstraction of Siebel Application
 	
 	
 	$SiebelApp->LogOff();
-	
+
 =head1 DESCRIPTION
-	
-The Siebel::Integration::Com modules are designed to remove the different method calls and eror checking between the COM Data Control and COM Data Server interfaces. 
+
+The Siebel::Integration::Com modules are designed to remove the different method calls and error checking between the COM Data Control and COM Data Server interfaces. 
 Changing between the two interfaces only requires a change in the parameters to Siebel::Integration::Com->new() rather than a rewrite of all calls.
 Beyond just replicating the base functions of the interfaces it is hoped that additional methods will be added to these modules to extend the functionality provided by the Siebel COM framework.
 
@@ -514,20 +527,33 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 		DataSource => 'ServerDataSrc',#thick client only
 	);
 
-	Thin Client Connection
+	#Thin Client Connection
 	
-	my $SiebelThin = Siebel::Integration::Com->new(ConnectionType=>'Thin', UserName=>$inputs{user}, PassWord=>$inputs{pass}, Host=>$inputs{host}, Ent=>$inputs{ent}, ObjMgr=>$inputs{ObjMgr});
+	my $SiebelThin = Siebel::Integration::Com->new(
+			ConnectionType=>'Thin', 
+			UserName=>$inputs{user}, 
+			PassWord=>$inputs{pass}, 
+			Host=>$inputs{host}, 
+			Ent=>$inputs{ent}, 
+			ObjMgr=>$inputs{ObjMgr}
+		);
 	
-	Thick Client Connection
+	#Thick Client Connection
 	
-	my $SiebelThick = Siebel::Integration::Com->new(ConnectionType=>'Thick', UserName=>$inputs{user}, PassWord=>$inputs{pass}, CFG=>$inputs{cfg}, DataSource=>$inputs{DataSource});
+	my $SiebelThick = Siebel::Integration::Com->new(
+			ConnectionType=>'Thick', 
+			UserName=>$inputs{user}, 
+			PassWord=>$inputs{pass}, 
+			CFG=>$inputs{cfg}, 
+			DataSource=>$inputs{DataSource}
+		);
 	
 	Sets SAPP->Error if an error occurs
 
 =item SAPP->Error
 
 	Returns the error text for the last operation, returns '' if no error.
-	
+
 =item SAPP->GetProfileAttr(Name)
 
 	Returns the value of the profile attribute. Using an attribute name that does not exist will return ''
@@ -536,12 +562,12 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 =item SAPP->SetProfileAttr(Name, Value)
 
 	Creates or updates a profile attribute
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
 
 =item SAPP->LogOff
 
-	Only the Thin client actually supports this as a method. Calling this will log off if connection type is Thin and undef the Siebel App OLE for both Thin and Thick clients.
+Only the Thin client actually supports this as a method. Calling this will log off if connection type is Thin and undef the Siebel App OLE for both Thin and Thick clients.
 
 =item SAPP->GetBusObject(Name)
 
@@ -566,7 +592,7 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 =item SAPP->SetSharedGlobal(Name, Value)
 
 	Creates or updates a shared global
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
 
 =item SAPP->CurrencyCode
@@ -592,21 +618,21 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 =item SAPP->SetPositionId(sPosId)
 
 	Sets the active position to a Position Id
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
 
 =item SAPP->SetPositionName(sPosName)
 
 	Sets the active position to a position name
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
-	
+
 =item SAPP->InvokeMethod(MethodName, Arg1, Arg2, ArgN)
 
 	B<See Bugs>
 	Currently this only allows for 0 or 1 argument to be passed. I have not yet worked out if this is due to me or a fault in the DLL.
 	Invokes a method on the application object
-	
+
 =item SAPP->EnableExceptions(true/false)
 
 	Only in thin client: Enables or disables native COM error handling. Acepts 0 or 1. If using the thick client this call is supressed
@@ -614,7 +640,7 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 =item SAPP->TraceOff
 
 	Turns tracing off
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
 
 =item SAPP->TraceOn(FileName, Type, Selection)
@@ -628,13 +654,13 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 		Script: Traces Siebel VB and Siebel eScript objects.
 		OLE: Traces allocations for data server or automation server programs.
 		All: Traces all objects that Siebel creates as a result of scripting. 
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
 
 =item SAPP->Trace(Message)
 
 	Writes the message to the trace file if tracing is on
-	Returns 1 for sucess
+	Returns 1 for success
 	Returns undef for failure. A failure will set SAPP->Error
 
 =item SAPP->GetLastErrCode
@@ -683,7 +709,7 @@ COM Data Server does not require the Siebel server as it uses the local machine 
 
 Windows
 
-Siebel Dedicated Client or more specificly, 	
+Siebel Dedicated Client or more specifically, 	
 
 sstchca.dll - This provides COM interface to Siebel application. This DLL is provided by Siebel and gets registered on your system when you install Siebel Dedicated (Thick) Client. 
 
@@ -691,25 +717,29 @@ The modules will install if the DLL is not present however until the DLL is regi
 
 =head1 TESTING
 
-WinXP x86
+WinXP x86 Active State Perl 32 Bit 5.16
+
+Windows 2003x64 Strawberry Perl 32Bit 5.16.2
 
 Siebel 7.7
 
 Siebel 8.1
 
-=head2 test.pl
+=head2 test.t
 
-test.pl has a full set of tests however due to almost all tests requireing a user name and password along with system settings to get the full set of tests you must update the %inputs and %testData
+test.t has a full set of tests however due to almost all tests requiring a user name and password along with system settings to get the full set of tests you must update the %inputs and %testData
 variables with the appropriate values. You can then select the tests you wish to preform using the constants at the top of the script.
 
-The test full.pl has over 400 tests if all are run in one go this seems to cause problems..... please run only thin or thick client tests at one time.
+The test full.t has over 400 tests if all are run in one go this seems to cause problems. Please run only thin or thick client tests at one time.
+Run standalone (without Test::More) there is no issue but as part of the test suite it just stops after some tests and does not give a report.
+Any help appreciated in understanding this would be appreciated.
 
 
 =head1 NOTES
 
-The Siebel Application base method Login is called as part of the New method and is not exposed to the user by the resuling Siebel::Integration::Com object
+The Siebel Application base method Login is called as part of the New method and is not exposed to the user by the resulting Siebel::Integration::Com object
 
-EnableExceptions - only in thin client, thick throws exception, have supressed call when on thick.
+EnableExceptions - only in thin client, thick throws exception, have suppressed call when on thick.
 
 =head1 BUGS/LIMITATIONS
 
@@ -726,22 +756,17 @@ L<Siebel::Integration::Com::BusSrv>
 L<Siebel::Integration::Com::PropSet>
 
 =head2 REFERENCES
-	
+
 L<Oracle Help Application Methods|http://docs.oracle.com/cd/E14004_01/books/OIRef/OIRef_Interfaces_Reference9.html>
 
 L<Oracle Help Business Component Methods|http://docs.oracle.com/cd/E14004_01/books/OIRef/OIRef_Interfaces_Reference11.html>
 
 L<Oracle Help Property Set Methods|http://docs.oracle.com/cd/E14004_01/books/OIRef/OIRef_Siebel_eScript_Quick_Reference11.html>
 
-=head1 TO DO
-
-	POD ALL
-		CRight
-		Author
 
 =head1 AUTHOR
 
-Author info
+Kyle Mathers, C<< <kyle.perl at mathersit.com> >>
 
 =head1 COPYRIGHT
 
@@ -753,7 +778,7 @@ at your option, any later version of Perl 5 you may have available.
 
 =head1 VERSION
 
-Version 0.01	  2013
+Version 0.02	  March 2013
 
 =cut
 

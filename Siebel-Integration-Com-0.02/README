@@ -1,6 +1,6 @@
 Siebel-Integration-Com
 
-Version 0.01
+Version 0.02
 
 The Siebel::Integration::Com modules are designed to remove the different method calls and eror checking between the COM Data Control and COM Data Server interfaces. 
 Changing between the two interfaces only requires a change in the parameters to Siebel::Integration::Com->new() rather than a rewrite of all calls.
